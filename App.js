@@ -1,4 +1,5 @@
-import { StyleSheet, StatusBar, Text, Image, View } from "react-native";
+import { useState } from "react";
+import { StyleSheet, StatusBar, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 export default function App() {
@@ -8,11 +9,14 @@ export default function App() {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
-  const localizacao = {
-    latitude: 37.563936,
-    longitude: -116.85123,
-    latitudeDelta: 10,
-    longitudeDelta: 10,
+
+  const localizacao = () => {
+    const [localizacao, setLocalizacao] = useState({
+      latitude: 37.563936,
+      longitude: -116.85123,
+      latitudeDelta: 10,
+      longitudeDelta: 10,
+    });
   };
   return (
     <>
@@ -34,9 +38,7 @@ export default function App() {
             onPress={(event) => {
               console.log(event.nativeEvent);
             }}
-          >
-            <Image source={require("./assets/ghost.png")} />
-          </Marker>
+          ></Marker>
         </MapView>
       </View>
     </>
