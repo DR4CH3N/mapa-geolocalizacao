@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, Text, View } from "react-native";
+import { StyleSheet, StatusBar, Text, Image, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 export default function App() {
@@ -34,7 +34,9 @@ export default function App() {
             onPress={(event) => {
               console.log(event.nativeEvent);
             }}
-          />
+          >
+            <Image source={require("./assets/ghost.png")} />
+          </Marker>
         </MapView>
       </View>
     </>
