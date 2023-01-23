@@ -1,56 +1,61 @@
-import { useState } from "react";
-import { StyleSheet, StatusBar, View } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { useState } from 'react';
+import { StyleSheet, Text, View, StatusBar, Image } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
 export default function App() {
-  const regiaoInicial = {
-    latitude: 51.2538,
-    longitude: -123.1207,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
+  const regiaoInicial = { // SP
+    latitude: -23.533773,
+    longitude: -46.65529,
+    latitudeDelta: 10,
+    longitudeDelta: 10
+  }
 
-  const localizacao = () => {
-    const [localizacao, setLocalizacao] = useState({
-      latitude: 37.563936,
-      longitude: -116.85123,
-      latitudeDelta: 10,
-      longitudeDelta: 10,
+  /* Usando state para controlar a localização */
+  const [localizacao, setLocalizacao] = useState({
+    latitude: -33.867886,
+    longitude:  -63.987,
+    latitudeDelta: 10,
+    longitudeDelta: 10
+  });
+
+  const marcarLocal = (event) => {
+    setLocalizacao({
+      ...localizacao,
+      latitude: event.nativeEvent.coordinate.latitude,
+      longitude: event.nativeEvent.coordinate.longitude
     });
-  };
+
+    console.log(localizacao);
+  }
+
   return (
     <>
       <StatusBar />
       <View style={estilos.container}>
-        <MapView
-          style={estilos.mapa}
-          initialRegion={regiaoInicial}
-          liteMode={false} // apenas android
-          mapType="satellite" // opções: satellite, hybrid, standard
-          userInterfaceStyle="dark" // somente IOS
-          maxZoomLevel={15}
-          minZoomLevel={4}
+        <MapView 
+          onPress={marcarLocal}
+          style={estilos.mapa} 
+          initialRegion={regiaoInicial} 
+          liteMode={false} 
+          mapType="standard"
         >
-          <Marker
-            draggable
-            title="Mira aqui!"
-            coordinate={localizacao}
-            onPress={(event) => {
-              console.log(event.nativeEvent);
-            }}
-          ></Marker>
+          <Marker 
+            coordinate={localizacao} 
+            title="Aqui!!!"
+            onPress={ e => console.log(e.nativeEvent) }
+          />
         </MapView>
       </View>
     </>
-  );
+    )
 }
 
 const estilos = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   mapa: {
     width: "100%",
-    height: "100%",
+    height: "100%"
+  },
+  container: {
+    flex: 1,
   },
 });
