@@ -1,5 +1,11 @@
 # Referências
 
+## 05-outra-solução-para-o-marker
+
+Nesta correção fizemos com que o `Marker` apareça apenas quando o usuário tocar em um local do Mapa, ou seja, condicionamos a exibição do marcador à existência de uma localização.
+
+---
+
 ## 04-mapview-com-marcador-interativo
 
 **DESAFIO**
