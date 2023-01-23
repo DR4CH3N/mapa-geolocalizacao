@@ -8,26 +8,20 @@ export default function App() {
   /* State para a geolocalização */
   const [minhaLocalizacao, setMinhaLocalizacao] = useState(null);
 
-  useEffect( () => {
-    async function obterLocalizacao(){
-      // Acessando o status da requisição de permissão de uso
-      const { status } = await Location.requestForegroundPermissionsAsync();
+  const [status, requestPermission] = Location.useForegroundPermissions();
 
-      // Verificando o status
-      // if( status !== 'granted' ){
-      //   Alert.alert("Ops!", "Você não autorizou o uso de recursos de localização");
-      //   return;
-      // }
-
-      // Acessando os dados de geolocalização
-      let localizacaoAtual = await Location.getCurrentPositionAsync({});
+  useEffect(()=>{
+    async function verificaPermissoes(){
+      const { locationStatus } = await Location.requestForegroundPermissionsAsync();
+      requestPermission(locationStatus === "granted");
       
-      // Adicionando os dados ao state
+      let localizacaoAtual = await Location.getCurrentPositionAsync({});
+      console.log("Status: "+status.status);
       setMinhaLocalizacao(localizacaoAtual);
-    }
+    } 
 
-    obterLocalizacao();
-  }, [] )
+    verificaPermissoes();
+  }, [])
 
   console.log(minhaLocalizacao);
 
